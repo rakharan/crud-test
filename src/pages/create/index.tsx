@@ -1,4 +1,4 @@
-import { Box, Button, Flex, Heading, Input, Text, Textarea } from '@chakra-ui/react'
+import { Alert, AlertIcon, Box, Button, Flex, Heading, Input, Text, Textarea } from '@chakra-ui/react'
 import React from 'react'
 import {
     FormControl,
@@ -8,16 +8,36 @@ import {
 import { useForm } from "react-hook-form";
 import axios from "axios"
 import Layout from '@/components/Layout';
+import Swal from 'sweetalert2';
 
 export default function Create() {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
     const onSubmit = async (data: any) => {
         console.log("this is data", data)
         console.log("this is register before being submitted", data)
-        await axios.post('https://jsonplaceholder.typicode.com/posts', data)
-            .then((res) => {
-                console.log(res.data)
+        try {
+            const response = await axios.post('https://jsonplaceholder.typicode.com/posts', data)
+                .then((res) => {
+                    console.log("create res", res)
+                    console.log(res.data)
+                    Swal.fire(
+                        {
+                            icon: 'success',
+                            title: 'New post has been added',
+                            showConfirmButton: false,
+                            timer: 1000
+                        }
+                    )
+                })
+        } catch (error) {
+            console.log(error);
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                timer: 1000
             })
+        }
 
     };
     console.log("empty input", errors);

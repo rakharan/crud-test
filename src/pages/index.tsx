@@ -7,6 +7,7 @@ import { paginate } from "../helper/paginate"
 import { Box, Button, Card, CardBody, CardFooter, CardHeader, Flex, Heading, SimpleGrid, Text } from "@chakra-ui/react";
 import Link from "next/link";
 import Layout from "@/components/Layout";
+import Swal from "sweetalert2";
 
 export default function Home({ data }: { data: any }) {
   const [currentPage, setCurrentPage] = useState(1);
@@ -16,7 +17,6 @@ export default function Home({ data }: { data: any }) {
     setCurrentPage(page);
   };
 
-  const [currentPosts, setCurrentPosts] = useState(null)
 
   const paginatedPosts = paginate(data, currentPage, pageSize);
   console.log("this is paginated posts", paginatedPosts)
@@ -26,7 +26,6 @@ export default function Home({ data }: { data: any }) {
     const index = newPaginatedPosts.findIndex((post: any) => post.id === id);
     if (index !== -1) {
       newPaginatedPosts.splice(index, 1);
-      setCurrentPosts(newPaginatedPosts);
     }
   }
 
@@ -67,7 +66,24 @@ export default function Home({ data }: { data: any }) {
                       <Flex w='full' onClick={(event) => {
                         event.preventDefault()
                         console.log("going to be deleted", item);
-                        handleDelete(item.id)
+                        Swal.fire({
+                          title: 'Are you sure?',
+                          text: "You won't be able to revert this!",
+                          icon: 'warning',
+                          showCancelButton: true,
+                          confirmButtonColor: '#3085d6',
+                          cancelButtonColor: '#d33',
+                          confirmButtonText: 'Yes, delete it!'
+                        }).then((result) => {
+                          if (result.isConfirmed) {
+                            handleDelete(item.id)
+                            Swal.fire(
+                              'Deleted!',
+                              'Your file has been deleted.',
+                              'success'
+                            )
+                          }
+                        })
                       }}>
                         <Button w='full'>Delete Post</Button>
                       </Flex>

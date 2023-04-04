@@ -1,26 +1,31 @@
 import React from 'react'
 import { Box, Flex, Heading, Text } from '@chakra-ui/react'
 import axios from 'axios'
+import Layout from '@/components/Layout'
 
 export default function Details({ post }: { post: any }) {
     const { title, body, id, userId } = post
 
     return (
-        <Box mt={10}>
-            <Heading textAlign='center'>
-                Post Detail
-            </Heading>
-            <Flex justifyContent='center' minH={'100vh'} alignItems={'center'} flexDirection='column' >
-                <Flex flexDirection='column' textAlign='left'>
-                    <Text>Post Id: {id}</Text>
-                    <Text>User Id: {userId}</Text>
+        <Layout title='Post Detail | Rakha'>
+
+            <Box mt={10}>
+                <Heading textAlign='center'>
+                    Post Detail
+                </Heading>
+                <Flex justifyContent='center' minH={'100vh'} alignItems={'center'} flexDirection='column' >
+                    <Flex flexDirection='column' textAlign='left'>
+                        <Text>Post Id: {id}</Text>
+                        <Text>User Id: {userId}</Text>
+                    </Flex>
+                    <Flex justifyContent="center" flexDirection='column' textAlign='center' w={640} rowGap={10}>
+                        <Heading>{title}</Heading>
+                        <Text>{body}</Text>
+                    </Flex>
                 </Flex>
-                <Flex justifyContent="center" flexDirection='column' textAlign='center' w={640} rowGap={10}>
-                    <Heading>{title}</Heading>
-                    <Text>{body}</Text>
-                </Flex>
-            </Flex>
-        </Box>
+            </Box>
+        </Layout>
+
     )
 }
 

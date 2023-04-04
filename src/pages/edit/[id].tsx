@@ -8,6 +8,7 @@ import {
 import { useForm } from "react-hook-form";
 import { Button, Flex, Heading, Input, Text, Textarea } from '@chakra-ui/react'
 import Layout from '@/components/Layout';
+import Swal from 'sweetalert2';
 
 export default function Edit({ post }: { post: any }) {
     const { register, handleSubmit, watch, formState: { errors } } = useForm();
@@ -15,13 +16,31 @@ export default function Edit({ post }: { post: any }) {
     const onSubmit = async (data: any) => {
         console.log("this is data", data);
         console.log("this is register before being submitted", data);
-        await axios
-            .patch(`https://jsonplaceholder.typicode.com/posts/${post.id}`, data)
-            .then((res) => {
-                console.log(res)
-                console.log(res.data);
-                console.log("after update", res.data);
-            });
+        try {
+            await axios
+                .patch(`https://jsonplaceholder.typicode.com/posts/${post.id}`, data)
+                .then((res) => {
+                    console.log(res)
+                    console.log(res.data);
+                    console.log("after update", res.data);
+                });
+            Swal.fire(
+                {
+                    icon: 'success',
+                    title: 'Your post has been updated',
+                    showConfirmButton: false,
+                    timer: 1000
+                })
+        }
+        catch (error) {
+            console.log(error)
+            Swal.fire({
+                icon: 'error',
+                title: 'Oops...',
+                text: 'Something went wrong!',
+                timer: 1000
+            })
+        }
     };
 
     return (
