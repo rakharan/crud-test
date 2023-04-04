@@ -116,11 +116,7 @@ const DesktopSubNav = ({ label, href, subLabel }: NavItem) => {
     return (
         <Link
             href={href}
-            role={'group'}
-            display={'block'}
-            p={2}
-            rounded={'md'}
-            _hover={{ bg: useColorModeValue('pink.50', 'gray.900') }}>
+            role={'group'}>
             <Stack direction={'row'} align={'center'}>
                 <Box>
                     <Text
@@ -199,7 +195,7 @@ const MobileNavItem = ({ label, children, href }: NavItem) => {
                     align={'start'}>
                     {children &&
                         children.map((child) => (
-                            <Link key={child.label} py={2} href={child.href}>
+                            <Link key={child.label} href={child.href}>
                                 {child.label}
                             </Link>
                         ))}
@@ -213,7 +209,7 @@ interface NavItem {
     label: string;
     subLabel?: string;
     children?: Array<NavItem>;
-    href?: string;
+    href: string;
 }
 
 const NAV_ITEMS: Array<NavItem> = [

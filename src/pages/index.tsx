@@ -47,7 +47,7 @@ export default function Home({ data }: { data: any }) {
           {paginatedPosts?.map((item: any) => {
             return (
               <>
-                <Card boxShadow={'lg'} _hover={{ boxShadow: 'none' }}>
+                <Card key={item.id} boxShadow={'lg'} _hover={{ boxShadow: 'none' }}>
                   <CardHeader>
                     <Heading size='md'> {item.title}</Heading>
                   </CardHeader>
