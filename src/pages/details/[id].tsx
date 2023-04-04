@@ -28,11 +28,11 @@ export async function getStaticPaths() {
     // generate all possible paths for this dynamic route
     const res = await axios.get('https://jsonplaceholder.typicode.com/posts')
     const posts = await res.data
-    const paths = posts.map(post => ({ params: { id: post.id.toString() } }))
+    const paths = posts.map((post: any) => ({ params: { id: post.id.toString() } }))
     return { paths, fallback: false }
 }
 
-export async function getStaticProps({ params }) {
+export async function getStaticProps({ params }: { params: any }) {
     // fetch the post by id and pass it as props to the component
     const { id } = params
     const res = await axios.get(`https://jsonplaceholder.typicode.com/posts/${id}`)
